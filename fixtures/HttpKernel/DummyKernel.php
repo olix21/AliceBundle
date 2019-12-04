@@ -98,7 +98,7 @@ class DummyKernel implements KernelInterface
     /**
      * {@inheritdoc}
      */
-    public function locateResource($name, $dir = null, $first = true)
+    public function locateResource($name)
     {
         $this->__call(__METHOD__, \func_get_args());
     }
@@ -179,6 +179,14 @@ class DummyKernel implements KernelInterface
      * {@inheritdoc}
      */
     public function isClassInActiveBundle($class)
+    {
+        $this->__call(__METHOD__, \func_get_args());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProjectDir($name, $arguments)
     {
         $this->__call(__METHOD__, \func_get_args());
     }

@@ -45,7 +45,7 @@ final class KernelFileResolver implements FileResolverInterface
     public function resolveFile(string $file): string
     {
         $realFile = ('@' === $file[0])
-            ? $this->kernel->locateResource($file, null, true)
+            ? $this->kernel->locateResource($file)
             : $file
         ;
 

@@ -9,7 +9,7 @@
     <php>
         <server name="KERNEL_DIR" value="tests/Functional" />
 
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak_vendors" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0" />
     </php>
 
     <testsuites>
