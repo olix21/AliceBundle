@@ -182,4 +182,12 @@ class DummyKernel implements KernelInterface
     {
         $this->__call(__METHOD__, \func_get_args());
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProjectDir()
+    {
+        $this->__call(__METHOD__, \func_get_args());
+    }
 }

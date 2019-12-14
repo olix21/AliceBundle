@@ -16,6 +16,7 @@ use Hautelook\AliceBundle\Functional\SimpleKernel;
 use Hautelook\AliceBundle\HttpKernel\DummyKernel;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -88,6 +89,10 @@ class KernelFileResolverTest extends TestCase
 
     public function testResolveFileWithTheKernelIfPossible()
     {
+        if (Kernel::VERSION_ID >= 50000) {
+            $this->markTestSkipped('Symfony 5 dropped the $first parameter in the locateResource method. This method can no longer return an array');
+        }
+
         $files = [
             '@SimpleBundle/files/foo.yml',
             __FILE__,
@@ -109,6 +114,9 @@ class KernelFileResolverTest extends TestCase
 
     public function testThrowsAnErrorIfTheFileResolvedByTheKernelIsNotAString()
     {
+        if (Kernel::VERSION_ID >= 50000) {
+            $this->markTestSkipped('Symfony 5 dropped the $first parameter in the locateResource method. This method can no longer return an array');
+        }
         $this->expectException(\TypeError::class);
 
         $files = [
