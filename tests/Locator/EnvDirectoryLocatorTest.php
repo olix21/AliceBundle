@@ -43,7 +43,7 @@ class EnvDirectoryLocatorTest extends TestCase
         $locator = new EnvDirectoryLocator($paths, [$invalidPath]);
         $actual = $locator->locateFiles($bundles, $environment);
 
-        $this->assertEquals($expected, $actual, '', 0.0, 10, true);
+        $this->assertEqualsCanonicalizing($expected, $actual);
     }
 
     public function provideSets()
@@ -106,7 +106,7 @@ class EnvDirectoryLocatorTest extends TestCase
             [],
         ];
 
-        yield 'bundle with fixture files' => [
+        yield 'bundle with fixture files 2' => [
             [new DummyBundle()],
             '',
             ['Resources/fixtures/test'],
@@ -149,7 +149,7 @@ class EnvDirectoryLocatorTest extends TestCase
         $locator = new EnvDirectoryLocator($paths, [$invalidPath]);
         $actual = $locator->locateFiles($bundles, $environment);
 
-        $this->assertEquals($expected, $actual, '', 0.0, 10, true);
+        $this->assertEqualsCanonicalizing($expected, $actual);
     }
 
     public function provideSetsForSeveralBundles()

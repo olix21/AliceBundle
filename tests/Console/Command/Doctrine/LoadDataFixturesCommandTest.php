@@ -54,12 +54,11 @@ class LoadDataFixturesCommandTest extends TestCase
         $this->assertTrue(true);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected application to be an instance of "Symfony\Bundle\FrameworkBundle\Console\Application".
-     */
     public function testThrowsAnExceptionIfInvalidApplicationIsGiven()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected application to be an instance of "Symfony\Bundle\FrameworkBundle\Console\Application".');
+
         $command = new DoctrineOrmLoadDataFixturesCommand('dummy', new FakeDoctrineManagerRegistry(), new FakeLoader());
         $command->setApplication(new ConsoleApplication());
     }

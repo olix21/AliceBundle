@@ -93,12 +93,11 @@ class InstantiatedReferenceInstantiatorTest extends TestCase
         $this->assertTrue($instantiator->canInstantiate($fixture));
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage Expected instantiator method "Hautelook\AliceBundle\Alice\Generator\Instantiator\Chainable\InstantiatedReferenceInstantiator::instantiate" to be used only if it has a container, but no container could be found.
-     */
     public function testThrowsAnExceptionIfNoContainerIsSetWhilstTryingToInstantiateObject()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('Expected instantiator method "Hautelook\AliceBundle\Alice\Generator\Instantiator\Chainable\InstantiatedReferenceInstantiator::instantiate" to be used only if it has a container, but no container could be found.');
+
         $fixture = new SimpleFixture(
             'dummy',
             City::class,
@@ -156,12 +155,11 @@ class InstantiatedReferenceInstantiatorTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @expectedException \Nelmio\Alice\Throwable\Exception\Generator\Instantiator\InstantiationException
-     * @expectedExceptionMessage Instantiated fixture was expected to be an instance of "Dummy". Got "Hautelook\AliceBundle\Functional\TestBundle\Entity\City" instead.
-     */
     public function testThrowsAnExceptionIfTheInstantiatedFixtureIsNotOfTheClassExpected()
     {
+        $this->expectException(\Nelmio\Alice\Throwable\Exception\Generator\Instantiator\InstantiationException::class);
+        $this->expectExceptionMessage('Instantiated fixture was expected to be an instance of "Dummy". Got "Hautelook\AliceBundle\Functional\TestBundle\Entity\City" instead.');
+
         $fixture = new SimpleFixture(
             'dummy',
             'Dummy',

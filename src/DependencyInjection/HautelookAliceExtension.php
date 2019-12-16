@@ -20,6 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * @private
@@ -62,11 +63,16 @@ final class HautelookAliceExtension extends Extension
      *
      *
      * @throws \InvalidArgumentException
+     * @throws \Exception
      */
     private function loadConfig(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
         $processedConfiguration = $this->processConfiguration($configuration, $configs);
+
+        if (Kernel::VERSION_ID >= 40000) {
+            $processedConfiguration['root_dirs'] = ['%kernel.project_dir%'];
+        }
 
         foreach ($processedConfiguration as $key => $value) {
             $container->setParameter(

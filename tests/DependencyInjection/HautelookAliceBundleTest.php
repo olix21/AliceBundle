@@ -34,29 +34,27 @@ class HautelookAliceBundleTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         if (null !== $this->kernel) {
             $this->kernel->shutdown();
         }
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage To register "Hautelook\AliceBundle\HautelookAliceBundle", you also need: "Doctrine\Bundle\DoctrineBundle\DoctrineBundle", "Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle".
-     */
     public function testCannotBootIfFidryAliceDataFixturesBundleIsNotRegistered()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('To register "Hautelook\AliceBundle\HautelookAliceBundle", you also need: "Doctrine\Bundle\DoctrineBundle\DoctrineBundle", "Fidry\AliceDataFixtures\Bridge\Symfony\FidryAliceDataFixturesBundle".');
+
         $this->kernel = new ConfigurableKernel('ConfigurableKernel0', true);
         $this->kernel->boot();
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage To register "Hautelook\AliceBundle\HautelookAliceBundle", you also need: "Doctrine\Bundle\DoctrineBundle\DoctrineBundle".
-     */
     public function testWillReplaceFixtureLoadCommandWithErrorInformationCommandIfDoctrineBundleIsNotRegistered()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('To register "Hautelook\AliceBundle\HautelookAliceBundle", you also need: "Doctrine\Bundle\DoctrineBundle\DoctrineBundle".');
+
         $this->kernel = new WithoutDoctrineKernel('ConfigurableKernel1', true);
         $this->kernel->addBundle(new FidryAliceDataFixturesBundle());
         $this->kernel->addBundle(new NelmioAliceBundle());

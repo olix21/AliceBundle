@@ -32,7 +32,7 @@ class KernelFileResolverTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         if (null !== $this->kernel) {
             $this->kernel->shutdown();
@@ -61,37 +61,38 @@ class KernelFileResolverTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @expectedException \TypeError
-     */
     public function testThrowsAnErrorIfOneOfTheFilePathGivenIsNotAString()
     {
+        $this->expectException(\TypeError::class);
+
         $resolver = new KernelFileResolver(new DummyKernel());
         $resolver->resolve([true]);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The file "unknown" was not found.
-     */
     public function testThrowsAnExceptionIfFileDoesNotExist()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The file "unknown" was not found.');
+
         $resolver = new KernelFileResolver(new DummyKernel());
         $resolver->resolve(['unknown']);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp /^Expected "\/.*?\/tests\/Resolver\/File" to be a fixture file, got a directory instead\.$/
-     */
     public function testThrowsAnExceptionIfFileIsADirectory()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/^Expected "\/.*?\/tests\/Resolver\/File" to be a fixture file, got a directory instead\.$/');
+
         $resolver = new KernelFileResolver(new DummyKernel());
         $resolver->resolve([__DIR__]);
     }
 
     public function testResolveFileWithTheKernelIfPossible()
     {
+        if (Kernel::VERSION_ID >= 50000) {
+            $this->markTestSkipped('Symfony 5 dropped the $first parameter in the locateResource method. This method can no longer return an array');
+        }
+
         $files = [
             '@SimpleBundle/files/foo.yml',
             __FILE__,
@@ -111,14 +112,13 @@ class KernelFileResolverTest extends TestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @expectedException \TypeError
-     */
     public function testThrowsAnErrorIfTheFileResolvedByTheKernelIsNotAString()
     {
-        if (Kernel::VERSION <= '5.0.0') {
+        if (Kernel::VERSION_ID >= 50000) {
             $this->markTestSkipped('Symfony 5 dropped the $first parameter in the locateResource method. This method can no longer return an array');
         }
+        $this->expectException(\TypeError::class);
+
         $files = [
             '@SimpleBundle/files/foo.yml',
         ];
@@ -131,11 +131,10 @@ class KernelFileResolverTest extends TestCase
         $resolver->resolve($files);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testThrowsAnExceptionIfFileResolvedByTheKernelDoesNotExist()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $files = [
             '@SimpleBundle/dummy.yml',
         ];
@@ -147,12 +146,11 @@ class KernelFileResolverTest extends TestCase
         $resolver->resolve($files);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected "@SimpleBundle/files" to be a fixture file, got a directory instead.
-     */
     public function testThrowsAnExceptionIfFileResolvedByTheKernelIsADirectory()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected "@SimpleBundle/files" to be a fixture file, got a directory instead.');
+
         $files = [
             '@SimpleBundle/files',
         ];

@@ -40,12 +40,11 @@ class DoctrineOrmLoaderTest extends TestCase
         $this->assertFalse((new ReflectionClass(DoctrineOrmLoader::class))->isCloneable());
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Expected loader to be an instance of "Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface".
-     */
     public function testDataFixtureLoaderMustBePersisterAware()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected loader to be an instance of "Fidry\AliceDataFixtures\Persistence\PersisterAwareInterface".');
+
         new DoctrineOrmLoader(new FakeBundleResolver(), new FakeFixtureLocator(), new FakeLoader(), new FakeLoader(), new FakeLogger());
     }
 }

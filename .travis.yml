@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - '7.1'
   - '7.2'
   - nightly
 
@@ -47,8 +46,8 @@ before_install:
   - if [ "$SYMFONY_REQUIRE" != "" ]; then composer global require --no-scripts symfony/flex; fi
   - |
     if [ -n "$COVERAGE" ]; then
+      pecl install pcov;
       PHPUNIT_FLAGS="$PHPUNIT_FLAGS --testdox --coverage-text"
-      PHPUNIT_BIN="phpdbg -qrr $PHPUNIT_BIN"
 
       if [ ! -e $OCULAR_BIN ]; then
           wget https://scrutinizer-ci.com/ocular.phar -O $OCULAR_BIN

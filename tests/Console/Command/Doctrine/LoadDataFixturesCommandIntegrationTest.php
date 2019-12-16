@@ -51,7 +51,7 @@ class LoadDataFixturesCommandIntegrationTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (false === class_exists(DoctrineBundle::class, true)) {
             $this->markTestSkipped('DoctrineBundle is not installed.');
@@ -90,7 +90,7 @@ class LoadDataFixturesCommandIntegrationTest extends TestCase
     /**
      * {@inheritdoc}
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->kernel->shutdown();
     }
@@ -143,12 +143,12 @@ class LoadDataFixturesCommandIntegrationTest extends TestCase
 
     /**
      * @dataProvider loadCommandProvider
-     *
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessageRegExp /^Doctrine (fixtures|ORM) Manager named "foo" does not exist\.$/
      */
     public function testFixturesRegisteringUsingInvalidManager(array $inputs, string $expected)
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessageMatches('/^Doctrine (fixtures|ORM) Manager named "foo" does not exist\.$/');
+
         $command = $this->application->find('hautelook:fixtures:load');
         $commandTester = new CommandTester($command);
         $commandTester->execute(

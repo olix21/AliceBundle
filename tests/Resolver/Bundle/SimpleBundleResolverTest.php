@@ -50,12 +50,11 @@ class SimpleBundleResolverTest extends TestCase
         $kernel->shutdown();
     }
 
-    /**
-     * @expectedException \Hautelook\AliceBundle\Exception\Resolver\BundleNotFoundException
-     * @expectedExceptionMessage The bundle "UnknownBundle" was not found. Bundles available are: ["ABundle", "BBundle"].
-     */
     public function testThrowsAnExceptionWhenBundleCoudlNotBeFound()
     {
+        $this->expectException(\Hautelook\AliceBundle\Exception\Resolver\BundleNotFoundException::class);
+        $this->expectExceptionMessage('The bundle "UnknownBundle" was not found. Bundles available are: ["ABundle", "BBundle"].');
+
         $kernel = new ResolverKernel(__FUNCTION__, true);
         $application = new Application($kernel);
         $kernel->boot();

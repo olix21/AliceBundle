@@ -56,9 +56,10 @@ class SimpleKernel extends Kernel
             $first = $this->overrideFirst;
         }
 
-        if (Kernel::VERSION >= '5.0.0') {
+        if (Kernel::VERSION_ID >= 50000) {
             return parent::locateResource($name);
         }
+      
         return parent::locateResource($name, $dir, $first);
     }
 }
