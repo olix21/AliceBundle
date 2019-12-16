@@ -59,7 +59,7 @@ class SimpleKernel extends Kernel
         if (Kernel::VERSION_ID >= 50000) {
             return parent::locateResource($name);
         }
-
+      
         return parent::locateResource($name, $dir, $first);
     }
 }
