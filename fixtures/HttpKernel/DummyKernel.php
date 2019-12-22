@@ -98,7 +98,7 @@ class DummyKernel implements KernelInterface
     /**
      * {@inheritdoc}
      */
-    public function locateResource($name)
+    public function locateResource($name, $dir = null, $first = true)
     {
         $this->__call(__METHOD__, \func_get_args());
     }

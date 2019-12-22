@@ -7,7 +7,9 @@
          verbose="true">
 
     <php>
+        <server name="APP_ENV" value="test" force="true" />
         <server name="KERNEL_DIR" value="tests/Functional" />
+        <server name="KERNEL_CLASS" value="Hautelook\AliceBundle\Functional\TestKernel" />
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[self]=0" />
     </php>
 
