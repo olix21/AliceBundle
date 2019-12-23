@@ -59,5 +59,23 @@ class AppKernel extends Kernel
         if ('public' !== $this->getEnvironment()) {
             return;
         }
+
+        $container->addCompilerPass(new class() implements CompilerPassInterface {
+            public function process(ContainerBuilder $container)
+            {
+                foreach ($container->getDefinitions() as $id => $definition) {
+                    if ($id === 'slugger') {
+                        continue;
+                    }
+                    $definition->setPublic(true);
+                }
+                foreach ($container->getAliases() as $id => $definition) {
+                    if ($id === 'Symfony\Component\String\Slugger\SluggerInterface') {
+                        continue;
+                    }
+                    $definition->setPublic(true);
+                }
+            }
+        }, PassConfig::TYPE_OPTIMIZE);
     }
 }
