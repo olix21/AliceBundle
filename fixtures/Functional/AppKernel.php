@@ -66,13 +66,13 @@ class AppKernel extends Kernel
             public function process(ContainerBuilder $container)
             {
                 foreach ($container->getDefinitions() as $id => $definition) {
-                    if ($id === 'slugger') {
+                    if ('slugger' === $id) {
                         continue;
                     }
                     $definition->setPublic(true);
                 }
                 foreach ($container->getAliases() as $id => $definition) {
-                    if ($id === 'Symfony\Component\String\Slugger\SluggerInterface') {
+                    if ('Symfony\Component\String\Slugger\SluggerInterface' === $id) {
                         continue;
                     }
                     $definition->setPublic(true);
